@@ -22,14 +22,11 @@ def calculate():
         b = int(entry_b.get())
         func_choice = func_var.get()
 
-        # Auswahl der Funktion basierend auf dem Radiobutton-Wert
         func = f if func_choice == 'f' else g if func_choice == 'g' else z
 
-        # Löschen der vorherigen Tabellenwerte
         for row in table.get_children():
             table.delete(row)
         
-        # Berechnung und Anzeige der Werte
         for i in range(limit_low, limit_high + 1, steps):
             table.insert("", "end", values=(i, func(m, i, b)))
     except ValueError:
