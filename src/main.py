@@ -10,6 +10,9 @@ def f(m: int | float, x: int | float, b: int | float) -> int | float:
 def g(m: int | float, x: int | float, b: int | float) -> int | float:
     return m * x ** 2 + b
 
+def z(m: int | float, x: int | float, b: int | float) -> int | float:
+    return m * x ** 3 + b
+
 def calculate():
     try:
         limit_low = int(entry_low.get())
@@ -18,12 +21,15 @@ def calculate():
         m = int(entry_m.get())
         b = int(entry_b.get())
         func_choice = func_var.get()
-        
-        func = f if func_choice == 'f' else g
-        
+
+        # Auswahl der Funktion basierend auf dem Radiobutton-Wert
+        func = f if func_choice == 'f' else g if func_choice == 'g' else z
+
+        # Löschen der vorherigen Tabellenwerte
         for row in table.get_children():
             table.delete(row)
         
+        # Berechnung und Anzeige der Werte
         for i in range(limit_low, limit_high + 1, steps):
             table.insert("", "end", values=(i, func(m, i, b)))
     except ValueError:
@@ -85,6 +91,8 @@ f_radio = tk.Radiobutton(frame, text="f(x) = m*x + b", variable=func_var, value=
 f_radio.grid(row=5, column=1, sticky="w", pady=5)
 g_radio = tk.Radiobutton(frame, text="g(x) = m*x^2 + b", variable=func_var, value='g', bg="#ffffff", font=("Arial", 14))
 g_radio.grid(row=6, column=1, sticky="w", pady=5)
+z_radio = tk.Radiobutton(frame, text="z(x) = m*x^3 + b", variable=func_var, value='z', bg="#ffffff", font=("Arial", 14))  # Neuer Radiobutton
+z_radio.grid(row=7, column=1, sticky="w", pady=5)
 
 calculate_button = tk.Button(root, text="Berechnen", command=calculate, bg="#4CAF50", fg="white", font=("Arial", 16), relief="flat")
 calculate_button.pack(pady=10, fill="x", padx=60)
